@@ -9,9 +9,10 @@ def db_connect():
     """
     try:
         conn = psycopg2.connect("dbname='test' user='postgres' host='localhost' password='test123'")
-        conn.cursor().execute("SELECT * FROM information_schema.tables WHERE table_name=%s", ('users',))
-        if conn.cursor().rowcount <= 0:
-            conn.cursor().execute("""
+        cur = conn.cursor()
+        cur.execute("SELECT EXISTS (SELECT * FROM information_schema.tables WHERE table_name=%s)", ('users',))
+        if not cur.fetchone()[0]:
+            cur.execute("""
             CREATE TABLE users
             (
               id serial NOT NULL,
@@ -23,9 +24,9 @@ def db_connect():
             """)
             conn.commit()
 
-        conn.cursor().execute("SELECT * FROM information_schema.tables WHERE table_name=%s", ('events',))
-        if conn.cursor().rowcount <= 0:
-            conn.cursor().execute("""
+        cur.execute("SELECT EXISTS (SELECT * FROM information_schema.tables WHERE table_name=%s)", ('events',))
+        if not cur.fetchone()[0]:
+            cur.execute("""
             CREATE TABLE events
             (
               id serial NOT NULL,
