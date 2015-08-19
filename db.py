@@ -23,6 +23,8 @@ def db_connect():
             );
             """)
             conn.commit()
+            
+        # TODO: добавить таблицу-справочник евентов, а в таблице евент добавлять id евента из справочника
 
         cur.execute("SELECT EXISTS (SELECT * FROM information_schema.tables WHERE table_name=%s)", ('events',))
         if not cur.fetchone()[0]:
