@@ -37,6 +37,8 @@ def db_connect():
             );
             """)
             conn.commit()
+            
+        # TODO: добавить таблицу-справочник евентов, а в таблице евент добавлять id евента из справочника
 
         cur.execute("SELECT EXISTS (SELECT * FROM information_schema.tables WHERE table_name=%s)", ('events',))
         if not cur.fetchone()[0]:
@@ -164,6 +166,9 @@ class DataBase:
             return None
 
         userId = user[0]
+        # TODO: по хорошему, надо завести отдельный справочник для имен евентов
+        # получать оттуда id нужного евента, если его нет - то добавлять
+        
         # в postgres now заменяется на время произведения транзакции
         DataBase.__cur.execute("""INSERT INTO events(owner_id, name, date, ip)
         VALUES (%s, %s, %s, %s)

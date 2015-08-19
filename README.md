@@ -1,4 +1,4 @@
 # stats
 Простой сервер статистики для учебных целей
 
-В проекте используется Python3, PostgreSQL для реализации REST API.
+В проекте используется Python3, PostgreSQL, Flask для реализации REST API.
