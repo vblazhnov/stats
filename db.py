@@ -150,6 +150,9 @@ class DataBase:
             return None
 
         userId = user[0]
+        # TODO: по хорошему, надо завести отдельный справочник для имен евентов
+        # получать оттуда id нужного евента, если его нет - то добавлять
+        
         # в postgres now заменяется на время произведения транзакции
         DataBase.__cur.execute("""INSERT INTO events(owner_id, name, date, ip)
         VALUES (%s, %s, %s, %s)
